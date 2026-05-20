@@ -22,5 +22,7 @@ dependencies = [
     "torchvision",
     "tqdm",
     "transformers",
-    "trl"
+    "trl",
+    "wandb",
+    "seaborn"
 ]

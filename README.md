@@ -171,12 +171,131 @@ hf_xxxxxxxxxxxxxxxxx
 ## Basic GSM8K Experiment
 
 ```bash
-python main.py \
+python src/main.py --model qwen2.5-7b --num_agents 3 --data gsm8k --data_size 50 --debate_rounds 3 --sparse
+```
+
+---
+
+## Different Communication Modes
+
+### Sparse Communication (3-agent ring topology)
+```bash
+python src/main.py \
+    --model qwen2.5-7b \
+    --num_agents 3 \
     --data gsm8k \
-    --model llama3.1 \
-    --num_agents 5 \
+    --data_size 50 \
     --debate_rounds 3 \
+    --sparse
+```
+
+### Full Communication (all agents see all)
+```bash
+python src/main.py \
+    --model qwen2.5-7b \
+    --num_agents 3 \
+    --data gsm8k \
+    --data_size 50 \
+    --debate_rounds 3
+```
+
+### Centralized Communication (one agent leads)
+```bash
+python src/main.py \
+    --model qwen2.5-7b \
+    --num_agents 3 \
+    --data gsm8k \
+    --data_size 50 \
+    --debate_rounds 3 \
+    --centralized
+```
+
+---
+
+## With W&B Logging
+
+```bash
+# First time: authenticate with W&B
+wandb login
+
+# Run experiment with logging
+python src/main.py \
+    --model qwen2.5-7b \
+    --num_agents 3 \
+    --data gsm8k \
+    --data_size 50 \
+    --debate_rounds 3 \
+    --sparse \
+    --use_wandb \
+    --wandb_project fluffy-fiesta
+```
+
+**Monitor metrics in real-time at:** `https://wandb.ai/<username>/fluffy-fiesta`
+
+---
+
+## Generate Visualizations
+
+After running experiments, generate enhanced visualizations with professional formatting:
+
+```bash
+python visualize_debate_enhanced.py
+```
+
+This creates:
+- **`out/debate_analysis_enhanced.png`** - Comprehensive 3x2 grid with:
+  - Accuracy comparison (sparse vs full communication)
+  - Agent consensus distribution
+  - Accuracy trajectory across rounds
+  - Per-round metrics table
+  - Summary statistics
+
+- **`out/debate_rounds_comparison.png`** - Per-round breakdown with side-by-side metrics for each round
+
+**Features:**
+- Clean, professional label formatting with percentage values
+- Axes labels clearly visible without text overlap
+- Color-coded sparse (blue) vs full communication (orange) comparison
+- High-resolution output (300 DPI PNG)
+
+---
+
+## Advanced Experiments
+
+### With Chain-of-Thought Prompting
+```bash
+python src/main.py \
+    --model qwen2.5-7b \
+    --num_agents 3 \
+    --data gsm8k \
+    --data_size 50 \
+    --debate_rounds 3 \
+    --sparse \
     --cot
+```
+
+### With Persona-Based Agents
+```bash
+python src/main.py \
+    --model qwen2.5-7b \
+    --num_agents 3 \
+    --data gsm8k \
+    --data_size 50 \
+    --debate_rounds 3 \
+    --sparse \
+    --multi_persona
+```
+
+### Larger Scale Run
+```bash
+python src/main.py \
+    --model qwen2.5-7b \
+    --num_agents 5 \
+    --data gsm8k \
+    --data_size 500 \
+    --debate_rounds 5 \
+    --sparse \
+    --use_wandb
 ```
 
 ---
@@ -194,6 +313,10 @@ python main.py \
 | `--sparse` | Sparse communication |
 | `--centralized` | Centralized communication |
 | `--multi_persona` | Persona-based agents |
+| `--use_wandb` | Enable Weights & Biases logging |
+| `--wandb_project` | W&B project name (default: fluffy-fiesta) |
+| `--wandb_entity` | W&B entity/team name (optional) |
+| `--cot` | Enable chain-of-thought prompting |
 
 ---
 

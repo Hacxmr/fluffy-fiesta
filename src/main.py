@@ -7,6 +7,12 @@ from tqdm import tqdm
 from datetime import datetime
 import torch
 
+try:
+    import wandb
+    WANDB_AVAILABLE = True
+except ImportError:
+    WANDB_AVAILABLE = False
+
 sys.path.insert(0, os.path.dirname(os.path.abspath(__file__)))
 sys.path.insert(0, os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
 
@@ -58,12 +64,17 @@ def get_args():
     parser.add_argument('--sparse', action='store_true')
     parser.add_argument('--centralized', action='store_true')
 
-    parser.add_argument('--solver', type=str, default='vote', choices=['vote','debate'])
+     parser.add_argument('--solver', type=str, default='vote', choices=['vote','debate'])
     parser.add_argument('--generate_first_round', action='store_true')
     parser.add_argument('--max_num_agents', type=int, default=3)
     parser.add_argument('--alpha', type=float, default=0.0)
     parser.add_argument('--bae', action='store_true', help="base answer extractor")
     parser.add_argument('--cot', action='store_true')
+    
+    # wandb
+    parser.add_argument('--use_wandb', action='store_true', help="Log metrics to Weights and Biases")
+    parser.add_argument('--wandb_project', type=str, default="fluffy-fiesta", help="W&B project name")
+    parser.add_argument('--wandb_entity', type=str, default=None, help="W&B entity name")
 
     return parser.parse_args()
 
@@ -194,6 +205,19 @@ def main(args):
 
     os.makedirs('out/history', exist_ok=True)
 
+    # Initialize W&B if enabled
+    if args.use_wandb and WANDB_AVAILABLE:
+        wandb.init(
+            project=args.wandb_project,
+            entity=args.wandb_entity,
+            config=vars(args),
+            name=f"{args.data}_{args.model}_N{args.num_agents}",
+            tags=[args.data, args.model, 'sparse' if args.sparse else 'full', 'debate']
+        )
+        print("W&B logging initialized")
+    elif args.use_wandb and not WANDB_AVAILABLE:
+        print("WARNING: --use_wandb flag set but wandb not installed. Install with: pip install wandb")
+
     # Load Agents
     agent, personas = get_agents(args)
 
@@ -304,6 +328,16 @@ def main(args):
         rounds_data_dict = {'0': round_data}
 
         round_iscorr.append(is_corr)
+        
+        # Log to W&B
+        if args.use_wandb and WANDB_AVAILABLE:
+            agent_accuracy = np.mean(round_data['final_answer_iscorr'])
+            wandb.log({
+                'round_0/agent_accuracy': agent_accuracy,
+                'round_0/debate_accuracy': 1.0 if is_corr else 0.0,
+                'round_0/debate_answer': debate_resps,
+                'sample_id': i
+            })
 
         start = 1
 
@@ -373,6 +407,17 @@ def main(args):
             rounds_data_dict[str(r)] = round_data
 
             round_iscorr.append(is_corr)
+            
+            # Log to W&B
+            if args.use_wandb and WANDB_AVAILABLE:
+                agent_accuracy = np.mean(round_data['final_answer_iscorr'])
+                wandb.log({
+                    f'round_{r}/agent_accuracy': agent_accuracy,
+                    f'round_{r}/debate_accuracy': 1.0 if is_corr else 0.0,
+                    f'round_{r}/debate_answer': debate_resps,
+                    'sample_id': i,
+                    'round': r
+                })
 
         sample_responses.append(rounds_data_dict)
 
@@ -391,9 +436,22 @@ def main(args):
         for i, acc in enumerate(round_accs):
             print(f'Round {i} Acc.: {acc:.4f}')
 
+    # Log final summary to W&B
+    if args.use_wandb and WANDB_AVAILABLE:
+        for i, acc in enumerate(round_accs):
+            wandb.log({f'final_accuracy_round_{i}': acc})
+        wandb.log({
+            'final_accuracy_avg': round_accs.mean(),
+            'final_accuracy_final_round': round_accs[-1]
+        })
+
     with open('out/logs.tsv', 'a') as f :
         line = f"\n{args.timestamp}\t{fname}\t{round_accs}"
         f.writelines(line)
+    
+    # Finish W&B run
+    if args.use_wandb and WANDB_AVAILABLE:
+        wandb.finish()
 
 
 if __name__ == "__main__":
