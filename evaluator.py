@@ -74,7 +74,14 @@ def evaluate_mcq(responses, answer):
                 char = pred[-1].upper()
                 final_answers.append(f"({char})")
             else:
-                final_answers.append("")
+                # Fallback: look for any (A-D) pattern, preferring ones later in response
+                pred = re.findall(r"\(?([A-Dd])\)?", response)
+                if pred:
+                    # Filter to only valid single letters in parens or at end
+                    char = pred[-1].upper()
+                    final_answers.append(f"({char})")
+                else:
+                    final_answers.append("")
         except :
             final_answers.append("")
     
