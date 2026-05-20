@@ -1,5 +1,5 @@
 [project]
-name = "debate-or-vote"
+name = "multi_agent_social_influence"
 version = "0.1.0"
 description = "Multi-agent debate framework"
 readme = "README.md"

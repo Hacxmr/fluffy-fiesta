@@ -189,7 +189,21 @@ python src/main.py --model qwen2.5-7b --num_agents 3 --data gsm8k --data_size 50
 ## Pro Medicine Experiment
 
 ```bash
-python src/main.py --model qwen2.5-7b --num_agents 3 --data pro_medicine --data_size 50 --debate_rounds 3 --sparse
+python src/main.py --model qwen2.5-7b --num_agents 3 --data pro_medicine --data_size 50 --debate_rounds 3 --sparse --cot
+```
+
+### With W&B Logging
+```bash
+python src/main.py \
+    --model qwen2.5-7b \
+    --num_agents 3 \
+    --data pro_medicine \
+    --data_size 50 \
+    --debate_rounds 3 \
+    --sparse \
+    --use_wandb \
+    --wandb_project fluffy-fiesta \
+    --cot
 ```
 
 ---
@@ -197,7 +211,21 @@ python src/main.py --model qwen2.5-7b --num_agents 3 --data pro_medicine --data_
 ## Formal Logic Experiment
 
 ```bash
-python src/main.py --model qwen2.5-7b --num_agents 3 --data formal_logic --data_size 50 --debate_rounds 3 --sparse
+python src/main.py --model qwen2.5-7b --num_agents 3 --data formal_logic --data_size 50 --debate_rounds 3 --sparse --cot
+```
+
+### With W&B Logging
+```bash
+python src/main.py \
+    --model qwen2.5-7b \
+    --num_agents 3 \
+    --data formal_logic \
+    --data_size 50 \
+    --debate_rounds 3 \
+    --sparse \
+    --use_wandb \
+    --wandb_project fluffy-fiesta \
+    --cot
 ```
 
 ---
@@ -253,7 +281,8 @@ python src/main.py \
     --debate_rounds 3 \
     --sparse \
     --use_wandb \
-    --wandb_project fluffy-fiesta
+    --wandb_project fluffy-fiesta \
+    --cot
 ```
 
 **Monitor metrics in real-time at:** `https://wandb.ai/<username>/fluffy-fiesta`
@@ -343,6 +372,41 @@ python src/main.py \
 | `--wandb_project` | W&B project name | string (default: fluffy-fiesta) |
 | `--wandb_entity` | W&B entity/team name | string (optional) |
 | `--data_size` | Number of samples to process | integer (default: 0 = all) |
+
+---
+
+# Understanding Key Flags
+
+## Chain-of-Thought (COT)
+The `--cot` flag enables **chain-of-thought prompting**, which instructs agents to:
+- Show their reasoning step-by-step
+- Explain their logic before providing the final answer
+- Improves answer quality and interpretability
+- Useful for complex reasoning tasks (math, logic, medicine)
+
+**Example:**
+```bash
+python src/main.py --data gsm8k --cot
+```
+
+---
+
+## Multi-Persona Agents
+The `--multi_persona` flag gives each agent a **unique persona or role**. This:
+- Assigns different expertise or personality traits to each agent
+- Agents may have different biases or perspectives (e.g., "conservative", "liberal", "specialist")
+- Can increase diversity in debate and reduce groupthink
+- Captures how different expert backgrounds influence reasoning
+- Agents interact while maintaining their assigned personas
+
+**Why it matters:**
+- Without `--multi_persona`: All agents reason similarly (just different random initializations)
+- With `--multi_persona`: Agents have distinct reasoning styles and expertise areas
+
+**Example:**
+```bash
+python src/main.py --data gsm8k --multi_persona --num_agents 3
+```
 
 ---
 
