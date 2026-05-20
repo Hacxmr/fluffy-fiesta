@@ -1,6 +1,7 @@
 from datasets import load_dataset
 import pandas as pd
 import re
+import os
 
 ANS_RE = re.compile(r"#### (\-?[0-9\.\,]+)")
 
@@ -14,8 +15,17 @@ def extract_answer(full_ans_text: str) -> str:
     return None
 
 def load_data(args, split='validation'):
-
-    dataset = load_dataset('openai/gsm8k', 'main', cache_dir=args.data_dir)[split]
+    
+    cache_dir = None
+    if hasattr(args, 'data_dir') and args.data_dir:
+        try:
+            os.makedirs(args.data_dir, exist_ok=True)
+            if os.access(args.data_dir, os.W_OK):
+                cache_dir = args.data_dir
+        except (OSError, PermissionError):
+            cache_dir = None
+    
+    dataset = load_dataset('openai/gsm8k', 'main', cache_dir=cache_dir)[split]
     dataset = pd.DataFrame(dataset)
     if split == 'train':
         dataset = dataset.sample(frac=1, random_state=0).reset_index(drop=True)
