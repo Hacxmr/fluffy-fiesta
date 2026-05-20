@@ -36,9 +36,13 @@ def evaluate_arithmetics(responses, answer):
     for _, response in responses.items():
 
         try:
-            pred = re.findall(r"\{(.*?)\}", response)[-1]
-            pred = float(pred.replace("final answer:", "").strip())
-            final_answers.append(np.round(pred, 1))
+            # Try to find answer in {final answer: X} format (handles escaped braces too)
+            pred = re.findall(r"\\?{\\?final answer:\s*([^}\\]*)", response)
+            if pred:
+                pred = float(pred[-1].strip())
+                final_answers.append(np.round(pred, 1))
+            else:
+                final_answers.append("")
         except :
             final_answers.append("")
 
@@ -64,22 +68,13 @@ def evaluate_mcq(responses, answer):
     for _, response in responses.items():
 
         try:
-            pred = re.findall(r"\{(.*?)\}", response)[-1]
-            pred = pred.replace("final answer:", "").strip()
-            if len(pred) == 0 :
+            # Try to find answer in {final answer: (X)} format (handles escaped braces too)
+            pred = re.findall(r"\\?{\\?final answer:\s*\(?([A-Dd])", response)
+            if pred:
+                char = pred[-1].upper()
+                final_answers.append(f"({char})")
+            else:
                 final_answers.append("")
-            elif len(pred) < 3 :
-                char = pred[0].upper()
-                if char in valid_choices:
-                    final_answers.append(f"({char})")
-                else:
-                    final_answers.append("")
-            else :
-                char = pred[1].upper()
-                if char in valid_choices:
-                    final_answers.append(f"({char})")
-                else:
-                    final_answers.append("")
         except :
             final_answers.append("")
     
