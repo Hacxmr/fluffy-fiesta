@@ -1,10 +1,22 @@
 from datasets import load_dataset
 import pandas as pd
+import os
 
 
 def load_data(args, split='validation'):
     split = 'validation' if split == 'train' else 'test'
-    dataset = load_dataset('cais/mmlu', 'professional_medicine', cache_dir=args.data_dir)[split]
+    
+    # Handle cache directory with permission fallback
+    cache_dir = None
+    if hasattr(args, 'data_dir') and args.data_dir:
+        try:
+            os.makedirs(args.data_dir, exist_ok=True)
+            if os.access(args.data_dir, os.W_OK):
+                cache_dir = args.data_dir
+        except (OSError, PermissionError):
+            cache_dir = None
+    
+    dataset = load_dataset('cais/mmlu', 'professional_medicine', cache_dir=cache_dir)[split]
     dataset = pd.DataFrame(dataset)
     
     questions, labels = [], []
