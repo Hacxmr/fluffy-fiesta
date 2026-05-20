@@ -26,8 +26,7 @@ def engine(messages, agent, num_agents=1, stop_sequences=None):
         do_sample=True,
         temperature=1.0,
         top_p=0.9,
-        num_return_sequences=1,
-        return_legacy_cache=True
+        num_return_sequences=1
     )
 
     generated_sequences = outputs.sequences  # shape: (batch_size * num_agents, seq_len)
