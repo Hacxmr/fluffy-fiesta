@@ -21,7 +21,9 @@ from data.data_utils import load_data
 from evaluator import (
     get_instruction_suffix,
     evaluate_arithmetics,
-    base_evaluate_arithmetics
+    evaluate_mcq,
+    base_evaluate_arithmetics,
+    base_evaluate_mcq
 )
 
 
@@ -202,9 +204,29 @@ def get_new_message(args, sample, responses, personas=None, suffix=None):
     return new_message
 
 
+def get_evaluator(args):
+    """Select the appropriate evaluation function based on dataset type"""
+    if args.data == 'gsm8k':
+        if args.bae:
+            return base_evaluate_arithmetics
+        else:
+            return evaluate_arithmetics
+    elif args.data in ['pro_medicine', 'formal_logic']:
+        if args.bae:
+            return base_evaluate_mcq
+        else:
+            return evaluate_mcq
+    else:
+        # Default to arithmetic evaluation
+        return evaluate_arithmetics
+
+
 def main(args):
 
     os.makedirs('out/history', exist_ok=True)
+    
+    # Select the appropriate evaluator function based on dataset
+    evaluate = get_evaluator(args)
 
     # Initialize W&B if enabled
     if args.use_wandb and WANDB_AVAILABLE:
