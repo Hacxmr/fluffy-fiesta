@@ -1,7 +1,7 @@
 [project]
 name = "debate-or-vote"
 version = "0.1.0"
-description = "Multi-agent debate framework for GSM8K"
+description = "Multi-agent debate framework"
 readme = "README.md"
 requires-python = ">=3.10"
 

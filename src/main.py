@@ -41,9 +41,10 @@ def get_args():
 
     # data
     parser.add_argument('--data_dir', type=str, default="/nobackup2/froilan/datasets/")
-    parser.add_argument('--data', type=str, default='gsm8k')
+    parser.add_argument('--data', type=str, default='gsm8k', 
+                        help="Dataset to use: 'gsm8k', 'pro_medicine', 'formal_logic'")
     parser.add_argument('--sub_data', type=str, default='')
-    parser.add_argument('--data_size', type=int, default=0)
+    parser.add_argument('--data_size', type=int, default=0, help="Number of samples to use (0 = all)")
     parser.add_argument('--split', type=str, default='train')
     parser.add_argument('--debug', action='store_true')
 
@@ -64,7 +65,7 @@ def get_args():
     parser.add_argument('--sparse', action='store_true')
     parser.add_argument('--centralized', action='store_true')
 
-     parser.add_argument('--solver', type=str, default='vote', choices=['vote','debate'])
+    parser.add_argument('--solver', type=str, default='vote', choices=['vote','debate'])
     parser.add_argument('--generate_first_round', action='store_true')
     parser.add_argument('--max_num_agents', type=int, default=3)
     parser.add_argument('--alpha', type=float, default=0.0)

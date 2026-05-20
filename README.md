@@ -168,10 +168,36 @@ hf_xxxxxxxxxxxxxxxxx
 
 # Running Experiments
 
+## Available Datasets
+
+The framework supports multiple reasoning datasets:
+
+- **gsm8k** - Math word problems requiring numerical reasoning
+- **pro_medicine** - MMLU Pro Medicine questions for medical reasoning
+- **formal_logic** - MMLU Formal Logic questions for logical reasoning
+
+---
+
 ## Basic GSM8K Experiment
 
 ```bash
 python src/main.py --model qwen2.5-7b --num_agents 3 --data gsm8k --data_size 50 --debate_rounds 3 --sparse
+```
+
+---
+
+## Pro Medicine Experiment
+
+```bash
+python src/main.py --model qwen2.5-7b --num_agents 3 --data pro_medicine --data_size 50 --debate_rounds 3 --sparse
+```
+
+---
+
+## Formal Logic Experiment
+
+```bash
+python src/main.py --model qwen2.5-7b --num_agents 3 --data formal_logic --data_size 50 --debate_rounds 3 --sparse
 ```
 
 ---
@@ -302,21 +328,21 @@ python src/main.py \
 
 # Important Arguments
 
-| Argument | Description |
-|---|---|
-| `--data` | Dataset name |
-| `--model` | Model name |
-| `--num_agents` | Number of agents |
-| `--debate_rounds` | Number of interaction rounds |
-| `--cot` | Enable chain-of-thought prompting |
-| `--bae` | Base answer extraction |
-| `--sparse` | Sparse communication |
-| `--centralized` | Centralized communication |
-| `--multi_persona` | Persona-based agents |
-| `--use_wandb` | Enable Weights & Biases logging |
-| `--wandb_project` | W&B project name (default: fluffy-fiesta) |
-| `--wandb_entity` | W&B entity/team name (optional) |
-| `--cot` | Enable chain-of-thought prompting |
+| Argument | Description | Options |
+|---|---|---|
+| `--data` | Dataset to use | `gsm8k`, `pro_medicine`, `formal_logic` |
+| `--model` | Model name | `qwen2.5-7b`, `llama3.1`, etc. |
+| `--num_agents` | Number of agents in debate | 2-10 (default: 5) |
+| `--debate_rounds` | Number of interaction rounds | 1-10 (default: 5) |
+| `--cot` | Enable chain-of-thought prompting | boolean flag |
+| `--bae` | Base answer extraction | boolean flag |
+| `--sparse` | Sparse communication (ring topology) | boolean flag |
+| `--centralized` | Centralized communication | boolean flag |
+| `--multi_persona` | Persona-based agents | boolean flag |
+| `--use_wandb` | Enable Weights & Biases logging | boolean flag |
+| `--wandb_project` | W&B project name | string (default: fluffy-fiesta) |
+| `--wandb_entity` | W&B entity/team name | string (optional) |
+| `--data_size` | Number of samples to process | integer (default: 0 = all) |
 
 ---
 
@@ -386,11 +412,18 @@ Round 1 Acc.: 1.00
 
 # Extending to Other Datasets
 
-The framework is modular and can support additional datasets beyond GSM8K.
+The framework is modular and already supports multiple datasets:
+
+**Currently Supported:**
+- ✅ GSM8K - Math word problems
+- ✅ MMLU Pro Medicine - Medical reasoning
+- ✅ MMLU Formal Logic - Logical reasoning
+
+**To Add New Datasets:**
 
 Potential datasets:
 - TruthfulQA
-- MMLU
+- MMLU (other subjects)
 - CSQA
 - HellaSwag
 - CNN/DailyMail
