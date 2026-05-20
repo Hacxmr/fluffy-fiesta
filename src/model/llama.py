@@ -13,11 +13,33 @@ def load_model(args, model_name_or_path, memory_for_model_activations_in_gb=2, p
     
     config = AutoConfig.from_pretrained(model_name_or_path, token=args.token)
     print(f"{model_name_or_path=}")
+    
+    cache_dir = None
+    if hasattr(args, 'model_dir') and args.model_dir:
+        try:
+            os.makedirs(args.model_dir, exist_ok=True)
+            if os.access(args.model_dir, os.W_OK):
+                cache_dir = args.model_dir
+        except (OSError, PermissionError):
+            cache_dir = None
+    
     if llama_version == 3:
-        model = AutoModelForCausalLM.from_pretrained(model_name_or_path, torch_dtype=torch.float16, device_map="auto", token=args.token, cache_dir=args.model_dir)
+        model = AutoModelForCausalLM.from_pretrained(
+            model_name_or_path, 
+            torch_dtype=torch.float16, 
+            device_map="auto", 
+            token=args.token,
+            cache_dir=cache_dir
+        )
     elif llama_version == 2:
-        # llama 2 must be loaded in bf16 with flash attention otherwise activations could go out of range and generate nans
-        model = AutoModelForCausalLM.from_pretrained(model_name_or_path, torch_dtype=torch.bfloat16, device_map="auto", token=args.token, cache_dir=args.model_dir, attn_implementation="flash_attention_2")
+        model = AutoModelForCausalLM.from_pretrained(
+            model_name_or_path, 
+            torch_dtype=torch.bfloat16, 
+            device_map="auto", 
+            token=args.token,
+            cache_dir=cache_dir,
+            attn_implementation="flash_attention_2"
+        )
     
     return model
 

@@ -12,7 +12,23 @@ from transformers import AutoConfig, AutoModelForCausalLM, AutoTokenizer, DataCo
 def load_model(args, model_name_or_path, memory_for_model_activations_in_gb=2, peft_path=None):
     
     config = AutoConfig.from_pretrained(model_name_or_path, token=args.token)
-    model = AutoModelForCausalLM.from_pretrained(model_name_or_path, torch_dtype=torch.float16, device_map="auto", token=args.token, cache_dir=args.model_dir)
+    
+    cache_dir = None
+    if hasattr(args, 'model_dir') and args.model_dir:
+        try:
+            os.makedirs(args.model_dir, exist_ok=True)
+            if os.access(args.model_dir, os.W_OK):
+                cache_dir = args.model_dir
+        except (OSError, PermissionError):
+            cache_dir = None
+    
+    model = AutoModelForCausalLM.from_pretrained(
+        model_name_or_path, 
+        torch_dtype=torch.float16, 
+        device_map="auto", 
+        token=args.token,
+        cache_dir=cache_dir
+    )
     
     return model
 
