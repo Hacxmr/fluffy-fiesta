@@ -151,11 +151,11 @@ ax3.plot(rounds, full_data['consensus'], 's-', label='Full', color=colors_full,
 
 for i, (s, f) in enumerate(zip(sparse_data['consensus'], full_data['consensus'])):
     if s > 0.02:
-        ax3.text(i - 0.12, s + 0.06, f'{s:.0%}', ha='center', fontweight='bold', fontsize=10, 
-                color=colors_sparse)
+        ax3.text(i - 0.12, s + 0.08, f'{s:.0%}', ha='center', fontweight='bold', fontsize=11, 
+                color=colors_sparse, bbox=dict(boxstyle='round,pad=0.4', facecolor='white', alpha=0.7, edgecolor='none'))
     if f > 0.02:
-        ax3.text(i + 0.12, f + 0.06, f'{f:.0%}', ha='center', fontweight='bold', fontsize=10,
-                color=colors_full)
+        ax3.text(i + 0.12, f + 0.08, f'{f:.0%}', ha='center', fontweight='bold', fontsize=11,
+                color=colors_full, bbox=dict(boxstyle='round,pad=0.4', facecolor='white', alpha=0.7, edgecolor='none'))
 
 ax3.set_xlabel('Debate Round', fontsize=13, fontweight='bold')
 ax3.set_ylabel('Agent Agreement %', fontsize=13, fontweight='bold')
@@ -179,10 +179,14 @@ ax4.plot(rounds, sparse_data['accuracy'], 'o-', label='Sparse Communication',
 ax4.plot(rounds, full_data['accuracy'], 's-', label='Full Communication',
          color=colors_full, linewidth=3, markersize=12, markeredgecolor='black', markeredgewidth=2)
 
-# Add value labels
+# Add value labels with better positioning
 for i, (s, f) in enumerate(zip(sparse_data['accuracy'], full_data['accuracy'])):
-    ax4.text(i - 0.12, s + 0.008, f'{s:.0%}', ha='center', fontweight='bold', fontsize=10, color=colors_sparse)
-    ax4.text(i + 0.12, f + 0.008, f'{f:.0%}', ha='center', fontweight='bold', fontsize=10, color=colors_full)
+    # Sparse: positioned slightly to the left and higher
+    ax4.text(i - 0.15, s + 0.025, f'{s:.0%}', ha='center', fontweight='bold', fontsize=11, 
+            color=colors_sparse, bbox=dict(boxstyle='round,pad=0.4', facecolor='white', alpha=0.7, edgecolor='none'))
+    # Full: positioned slightly to the right and higher
+    ax4.text(i + 0.15, f + 0.025, f'{f:.0%}', ha='center', fontweight='bold', fontsize=11, 
+            color=colors_full, bbox=dict(boxstyle='round,pad=0.4', facecolor='white', alpha=0.7, edgecolor='none'))
 
 ax4.set_xlabel('Debate Round', fontsize=13, fontweight='bold')
 ax4.set_ylabel('Accuracy', fontsize=13, fontweight='bold')
