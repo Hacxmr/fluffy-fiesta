@@ -59,6 +59,8 @@ def evaluate_arithmetics(responses, answer):
 def evaluate_mcq(responses, answer):
     # Returns True if corret, False if incorrect
     final_answers = []
+    valid_choices = {'A', 'B', 'C', 'D', 'a', 'b', 'c', 'd'}
+    
     for _, response in responses.items():
 
         try:
@@ -67,11 +69,17 @@ def evaluate_mcq(responses, answer):
             if len(pred) == 0 :
                 final_answers.append("")
             elif len(pred) < 3 :
-                pred = pred[0]
-                final_answers.append(f"({pred})")
+                char = pred[0].upper()
+                if char in valid_choices:
+                    final_answers.append(f"({char})")
+                else:
+                    final_answers.append("")
             else :
-                pred = pred[1]
-                final_answers.append(f"({pred})")
+                char = pred[1].upper()
+                if char in valid_choices:
+                    final_answers.append(f"({char})")
+                else:
+                    final_answers.append("")
         except :
             final_answers.append("")
     
@@ -113,6 +121,8 @@ def base_evaluate_arithmetics(responses, answer):
 def base_evaluate_mcq(responses, answer):
 
     final_answers = []
+    valid_choices = {'A', 'B', 'C', 'D'}
+    
     for _, input_str in responses.items():
 
         pattern = r'\((\w)\)'
@@ -121,7 +131,7 @@ def base_evaluate_mcq(responses, answer):
         solution = None
         for match_str in matches[::-1]:
             solution = match_str.upper()
-            if solution:
+            if solution in valid_choices:
                 final_answers.append(f"({solution})")
                 break
 
