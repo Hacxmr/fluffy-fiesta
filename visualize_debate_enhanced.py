@@ -69,9 +69,9 @@ rounds = list(range(num_rounds))
 fig = plt.figure(figsize=(16, 12))
 gs = fig.add_gridspec(3, 2, hspace=0.35, wspace=0.3)
 
-# Color scheme
-colors_sparse = '#E74C3C'  # Red
-colors_full = '#3498DB'    # Blue
+# Color scheme (matching visualize_debate.py)
+colors_sparse = '#1f77b4'  # Blue (matplotlib default)
+colors_full = '#ff7f0e'    # Orange (matplotlib default)
 
 # ============ ROW 1: Accuracy Across Rounds ============
 ax1 = fig.add_subplot(gs[0, :])
