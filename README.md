@@ -194,16 +194,8 @@ python src/main.py --model qwen2.5-7b --num_agents 3 --data pro_medicine --data_
 
 ### With W&B Logging
 ```bash
-python src/main.py \
-    --model qwen2.5-7b \
-    --num_agents 3 \
-    --data pro_medicine \
-    --data_size 50 \
-    --debate_rounds 3 \
-    --sparse \
-    --use_wandb \
-    --wandb_project fluffy-fiesta \
-    --cot
+python src/main.py --model qwen2.5-7b --num_agents 3 --data pro_medicine --data_size 5 --debate_rounds 2 --sparse --use_wandb --wandb_project fluffy-fiesta --cot
+
 ```
 
 ---

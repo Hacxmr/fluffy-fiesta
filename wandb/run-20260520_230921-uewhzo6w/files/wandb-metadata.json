@@ -1,0 +1,45 @@
+{
+  "os": "Windows-10-10.0.26200-SP0",
+  "python": "CPython 3.11.13",
+  "startedAt": "2026-05-20T17:39:21.929873Z",
+  "args": [
+    "--model",
+    "qwen2.5-7b",
+    "--num_agents",
+    "3",
+    "--data",
+    "pro_medicine",
+    "--data_size",
+    "5",
+    "--debate_rounds",
+    "2",
+    "--sparse",
+    "--use_wandb",
+    "--wandb_project",
+    "fluffy-fiesta",
+    "--cot"
+  ],
+  "program": "C:\\Users\\Mitali Raj\\Downloads\\Github\\multi-agent\\fluffy-fiesta\\src\\main.py",
+  "codePath": "src\\main.py",
+  "codePathLocal": "src\\main.py",
+  "git": {
+    "remote": "https://github.com/Hacxmr/fluffy-fiesta.git",
+    "commit": "dd931413fbae8c28927c24a47e4499fc267ee970"
+  },
+  "email": "23f1003094@ds.study.iitm.ac.in",
+  "root": "C:\\Users\\Mitali Raj\\Downloads\\Github\\multi-agent\\fluffy-fiesta",
+  "host": "DESKTOP-AH9GS3S",
+  "executable": "C:\\Users\\Mitali Raj\\Downloads\\Github\\multi-agent\\fluffy-fiesta\\.venv\\Scripts\\python.exe",
+  "cpu_count": 8,
+  "cpu_count_logical": 16,
+  "disk": {
+    "/": {
+      "total": "1023011713024",
+      "used": "540649332736"
+    }
+  },
+  "memory": {
+    "total": "16476790784"
+  },
+  "writerId": "cgwukskxw48hqnvf73wjm1se46ildp1e"
+}

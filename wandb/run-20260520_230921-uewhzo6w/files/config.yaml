@@ -1,0 +1,130 @@
+_wandb:
+    value:
+        cli_version: 0.27.0
+        e:
+            cgwukskxw48hqnvf73wjm1se46ildp1e:
+                args:
+                    - --model
+                    - qwen2.5-7b
+                    - --num_agents
+                    - "3"
+                    - --data
+                    - pro_medicine
+                    - --data_size
+                    - "5"
+                    - --debate_rounds
+                    - "2"
+                    - --sparse
+                    - --use_wandb
+                    - --wandb_project
+                    - fluffy-fiesta
+                    - --cot
+                codePath: src\main.py
+                codePathLocal: src\main.py
+                cpu_count: 8
+                cpu_count_logical: 16
+                disk:
+                    /:
+                        total: "1023011713024"
+                        used: "540649332736"
+                email: 23f1003094@ds.study.iitm.ac.in
+                executable: C:\Users\Mitali Raj\Downloads\Github\multi-agent\fluffy-fiesta\.venv\Scripts\python.exe
+                git:
+                    commit: dd931413fbae8c28927c24a47e4499fc267ee970
+                    remote: https://github.com/Hacxmr/fluffy-fiesta.git
+                host: DESKTOP-AH9GS3S
+                memory:
+                    total: "16476790784"
+                os: Windows-10-10.0.26200-SP0
+                program: C:\Users\Mitali Raj\Downloads\Github\multi-agent\fluffy-fiesta\src\main.py
+                python: CPython 3.11.13
+                root: C:\Users\Mitali Raj\Downloads\Github\multi-agent\fluffy-fiesta
+                startedAt: "2026-05-20T17:39:21.929873Z"
+                writerId: cgwukskxw48hqnvf73wjm1se46ildp1e
+        m: []
+        python_version: 3.11.13
+        t:
+            "1":
+                - 1
+                - 5
+                - 49
+                - 51
+                - 53
+            "2":
+                - 1
+                - 5
+                - 11
+                - 41
+                - 49
+                - 51
+                - 53
+                - 71
+                - 98
+            "3":
+                - 13
+                - 15
+                - 16
+            "4": 3.11.13
+            "5": 0.27.0
+            "8":
+                - 3
+            "12": 0.27.0
+            "13": windows-amd64
+agent_selection:
+    value: none
+alpha:
+    value: 0
+bae:
+    value: false
+centralized:
+    value: false
+cot:
+    value: true
+data:
+    value: pro_medicine
+data_dir:
+    value: /nobackup2/froilan/datasets/
+data_size:
+    value: 5
+debate_rounds:
+    value: 2
+debug:
+    value: false
+generate_first_round:
+    value: false
+max_num_agents:
+    value: 3
+memory_for_model_activations_in_gb:
+    value: 4
+model:
+    value: qwen2.5-7b
+model_dir:
+    value: /nobackup2/froilan/models/
+multi_persona:
+    value: false
+num_agents:
+    value: 3
+out_dir:
+    value: out/
+seed:
+    value: 42
+solver:
+    value: vote
+sparse:
+    value: true
+split:
+    value: train
+sub_data:
+    value: ""
+timestamp:
+    value: 20/05/2026 23:09:20
+token:
+    value: null
+use_wandb:
+    value: true
+verbose:
+    value: false
+wandb_entity:
+    value: null
+wandb_project:
+    value: fluffy-fiesta

@@ -1,0 +1,56 @@
+W&B logging initialized
+[transformers] `torch_dtype` is deprecated! Use `dtype` instead!
+Fetching 4 files:   0%|                                                                   | 0/4 [09:18<?, ?it/s]
+Traceback (most recent call last):                                                        | 0/4 [00:00<?, ?it/s]
+  File "C:\Users\Mitali Raj\Downloads\Github\multi-agent\fluffy-fiesta\src\main.py", line 481, in <module>
+    main(args)
+  File "C:\Users\Mitali Raj\Downloads\Github\multi-agent\fluffy-fiesta\src\main.py", line 223, in main
+    agent, personas = get_agents(args)
+                      ^^^^^^^^^^^^^^^^
+  File "C:\Users\Mitali Raj\Downloads\Github\multi-agent\fluffy-fiesta\src\model\model_utils.py", line 56, in get_agents
+    agent = QwenWrapper(args, model_dirs[args.model], memory_for_model_activations_in_gb=args.memory_for_model_activations_in_gb, lora_adapter_path=peft_path)
+            ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\Mitali Raj\Downloads\Github\multi-agent\fluffy-fiesta\src\model\qwen.py", line 45, in __init__
+    self.huggingface_model = load_model(args, model_dir, memory_for_model_activations_in_gb, lora_adapter_path)
+                             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\Mitali Raj\Downloads\Github\multi-agent\fluffy-fiesta\src\model\qwen.py", line 25, in load_model
+    model = AutoModelForCausalLM.from_pretrained(
+            ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\Mitali Raj\Downloads\Github\multi-agent\fluffy-fiesta\.venv\Lib\site-packages\transformers\models\auto\auto_factory.py", line 405, in from_pretrained
+    return model_class.from_pretrained(
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\Mitali Raj\Downloads\Github\multi-agent\fluffy-fiesta\.venv\Lib\site-packages\transformers\modeling_utils.py", line 4204, in from_pretrained
+    checkpoint_files, sharded_metadata = _get_resolved_checkpoint_files(
+                                         ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\Mitali Raj\Downloads\Github\multi-agent\fluffy-fiesta\.venv\Lib\site-packages\transformers\modeling_utils.py", line 797, in _get_resolved_checkpoint_files
+    checkpoint_files, sharded_metadata = get_checkpoint_shard_files(
+                                         ^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\Mitali Raj\Downloads\Github\multi-agent\fluffy-fiesta\.venv\Lib\site-packages\transformers\utils\hub.py", line 879, in get_checkpoint_shard_files
+    cached_filenames = cached_files(
+                       ^^^^^^^^^^^^^
+  File "C:\Users\Mitali Raj\Downloads\Github\multi-agent\fluffy-fiesta\.venv\Lib\site-packages\transformers\utils\hub.py", line 437, in cached_files
+    snapshot_download(
+  File "C:\Users\Mitali Raj\Downloads\Github\multi-agent\fluffy-fiesta\.venv\Lib\site-packages\huggingface_hub\utils\_validators.py", line 88, in _inner_fn
+    return fn(*args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\Mitali Raj\Downloads\Github\multi-agent\fluffy-fiesta\.venv\Lib\site-packages\huggingface_hub\_snapshot_download.py", line 455, in snapshot_download
+    thread_map(
+  File "C:\Users\Mitali Raj\Downloads\Github\multi-agent\fluffy-fiesta\.venv\Lib\site-packages\tqdm\contrib\concurrent.py", line 69, in thread_map
+    return _executor_map(ThreadPoolExecutor, fn, *iterables, **tqdm_kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\Mitali Raj\Downloads\Github\multi-agent\fluffy-fiesta\.venv\Lib\site-packages\tqdm\contrib\concurrent.py", line 51, in _executor_map
+    return list(tqdm_class(ex.map(fn, *iterables, chunksize=chunksize), **kwargs))
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\Mitali Raj\Downloads\Github\multi-agent\fluffy-fiesta\.venv\Lib\site-packages\tqdm\std.py", line 1181, in __iter__
+    for obj in iterable:
+  File "C:\Users\Mitali Raj\AppData\Roaming\uv\python\cpython-3.11.13-windows-x86_64-none\Lib\concurrent\futures\_base.py", line 619, in result_iterator
+    yield _result_or_cancel(fs.pop())
+          ^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\Mitali Raj\AppData\Roaming\uv\python\cpython-3.11.13-windows-x86_64-none\Lib\concurrent\futures\_base.py", line 317, in _result_or_cancel
+    return fut.result(timeout)
+           ^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\Mitali Raj\AppData\Roaming\uv\python\cpython-3.11.13-windows-x86_64-none\Lib\concurrent\futures\_base.py", line 451, in result
+    self._condition.wait(timeout)
+  File "C:\Users\Mitali Raj\AppData\Roaming\uv\python\cpython-3.11.13-windows-x86_64-none\Lib\threading.py", line 327, in wait
+    waiter.acquire()
+KeyboardInterrupt
