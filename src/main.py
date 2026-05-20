@@ -273,11 +273,6 @@ def main(args):
     # Setup Experiments
     SUFFIX = get_instruction_suffix(args)
 
-    if args.bae :
-        evaluate = base_evaluate_arithmetics
-    else :
-        evaluate = evaluate_arithmetics
-
     # Debate
     sample_responses = []
     iscorr_list = []
