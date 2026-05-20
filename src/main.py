@@ -335,12 +335,12 @@ def main(args):
             'responses': agent_responses,
             'final_answers': final_resps,
             'final_answer_iscorr': [
-                y_pred == np.round(y,1)
+                y_pred == y if isinstance(y, str) else y_pred == np.round(y, 1)
                 for y_pred in final_resps
             ],
             'debate_answer': debate_resps,
             'debate_answer_iscorr': is_corr,
-            'answer': np.round(y, 1),
+            'answer': y if isinstance(y, str) else np.round(y, 1),
         }
 
         rounds_data_dict = {'0': round_data}
@@ -414,12 +414,12 @@ def main(args):
                 'responses': agent_responses,
                 'final_answers': final_resps,
                 'final_answer_iscorr': [
-                    y_pred == np.round(y,1)
+                    y_pred == y if isinstance(y, str) else y_pred == np.round(y, 1)
                     for y_pred in final_resps
                 ],
                 'debate_answer': debate_resps,
                 'debate_answer_iscorr': is_corr,
-                'answer': np.round(y, 1),
+                'answer': y if isinstance(y, str) else np.round(y, 1),
             }
 
             rounds_data_dict[str(r)] = round_data
