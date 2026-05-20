@@ -19,6 +19,10 @@ def load_data(args, split='validation'):
     dataset = load_dataset('cais/mmlu', 'professional_medicine', cache_dir=cache_dir)[split]
     dataset = pd.DataFrame(dataset)
     
+    # Apply data_size limit if specified
+    if args.data_size > 0:
+        dataset = dataset.head(args.data_size)
+    
     questions, labels = [], []
     choices = "ABCD"
     template = '{}\n(A) {}\n(B) {}\n(C) {}\n(D) {}\n\n'
