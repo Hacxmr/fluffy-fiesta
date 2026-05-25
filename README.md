@@ -471,9 +471,9 @@ Round 1 Acc.: 1.00
 The framework is modular and already supports multiple datasets:
 
 **Currently Supported:**
-- ✅ GSM8K - Math word problems
-- ✅ MMLU Pro Medicine - Medical reasoning
-- ✅ MMLU Formal Logic - Logical reasoning
+-  GSM8K - Math word problems
+-  MMLU Pro Medicine - Medical reasoning
+-  MMLU Formal Logic - Logical reasoning
 
 **To Add New Datasets:**
 
