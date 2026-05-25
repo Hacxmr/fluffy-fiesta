@@ -665,12 +665,4 @@ Key question:
 
 ---
 
-# Citation
 
-```bibtex
-@misc{multi_agent_social_influence,
-  title={Multi-Agent Social Influence Framework},
-  author={Mitali Raj},
-  year={2026}
-}
-```
